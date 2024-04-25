@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 
-export default function KeyboardAvoider(props) {
+export default function KeyboardAvoider(props: any) {
   const anim = useRef(new Animated.Value(0)).current;
   const animationParams = {
     duration: 500,
