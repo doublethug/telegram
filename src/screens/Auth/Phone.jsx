@@ -43,12 +43,14 @@ export default function AuthPhone({ navigation }) {
   }, []);
 
   const phoneSubmit = async () => {
-    const { phone_code_hash } = await mtproto.call("auth.sendCode", {
+    const temp = await mtproto.call("auth.sendCode", {
       phone_number: phone,
       settings: {
         _: "codeSettings",
       },
     });
+    const { phone_code_hash } = temp;
+    console.log("NG PHONE TEMP", temp)
 
     console.log(phone, phone_code_hash);
 
@@ -72,7 +74,7 @@ export default function AuthPhone({ navigation }) {
           style={styles.input}
           keyboardType="phone-pad"
           defaultValue={countries[country]}
-          maxLength={13}
+          maxLength={14}
           ref={input}
           onChangeText={setPhone}
         />

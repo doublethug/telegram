@@ -53,9 +53,9 @@ export async function getDialogs(
   const chats = [];
 
   for (const dialog of dialogs.dialogs) {
-    const peer = peers[dialog.peer._];
+    const peer = peers[dialog.peer?._];
     const dialogPeer = dialog.peer[peer];
-    const inputPeer = inputPeers[dialog.peer._];
+    const inputPeer = inputPeers[dialog.peer?._];
     const userPeer = peer === "user_id";
 
     const chat = dialogs.chats.find((chat) => chat.id === dialogPeer);
@@ -67,8 +67,8 @@ export async function getDialogs(
     );
 
     if (
-      message._ === "messageService" &&
-      message.action._ === "messageActionChatMigrateTo"
+      message?._ === "messageService" &&
+      message?.action?._ === "messageActionChatMigrateTo"
     ) {
       continue;
     }
@@ -104,7 +104,7 @@ export async function getDialogs(
         !chat &&
         !user.self &&
         !user.bot &&
-        user.status._ === "userStatusOnline",
+        user.status?._ === "userStatusOnline",
       typing: false,
     });
   }

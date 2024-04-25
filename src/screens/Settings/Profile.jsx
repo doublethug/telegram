@@ -16,21 +16,26 @@ export default function SettingsProfile({ navigation }) {
         },
       });
 
-      const profile_photo = await mtproto.call("upload.getFile", {
-        location: {
-          _: "inputPeerPhotoFileLocation",
-          peer: {
-            _: "inputPeerSelf",
-          },
-          photo_id: profile.full_user.profile_photo.id,
-        },
-        offset: 0,
-        limit: 1024 * 1024,
-      });
+      console.log("PROFILE", profile?.full_user );
 
-      profile.profile_photo =
-        "data:image/jpeg;base64," +
-        Buffer.from(profile_photo.bytes).toString("base64");
+      if (profile?.full_user?.profile_photo && profile?.full_user?.profile_photo?.id) {
+        const profile_photo = await mtproto.call("upload.getFile", {
+          location: {
+            _: "inputPeerPhotoFileLocation",
+            peer: {
+              _: "inputPeerSelf",
+            },
+            photo_id: profile?.full_user?.profile_photo?.id,
+          },
+          offset: 0,
+          limit: 1024 * 1024,
+        });
+
+        profile.profile_photo =
+          "data:image/jpeg;base64," +
+          Buffer.from(profile_photo.bytes).toString("base64");
+
+      }
 
       setProfile(profile);
     })();
@@ -52,7 +57,7 @@ export default function SettingsProfile({ navigation }) {
         {profile?.users?.[0]?.first_name} {profile?.users?.[0]?.last_name}
       </Text>
 
-      <Text style={styles.logoCaption}>+{profile?.users[0]?.phone}</Text>
+      <Text style={styles.logoCaption}>+{profile?.users[0]?.phone}123</Text>
       <Text style={styles.logoCaption}>{profile?.full_user.about}</Text>
 
       <TouchableOpacity onPress={logOut}>

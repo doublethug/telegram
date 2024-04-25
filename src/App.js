@@ -10,6 +10,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native";
 import WebviewCrypto from "react-native-webview-crypto";
+import ChatDialog from "./screens/Chats/Dialog";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -72,6 +73,14 @@ export default function App() {
             options={{
               headerTitle: "Chats",
               headerBackTitle: "My profile",
+            }}
+          />
+          <Stack.Screen
+            name="ChatsDialog"
+            component={ChatDialog}
+            options={{
+              headerTitle: "Chat",
+              headerBackTitle: "Chats",
             }}
           />
         </Stack.Navigator>

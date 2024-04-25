@@ -19,7 +19,7 @@ import { getMediaType } from "../../utils/getMediaType";
 import colors from "../../styles/colors";
 import styles from "./styles";
 
-export default function ChatsDialogs() {
+export default function ChatDialog() {
   const chatsRef = useRef([]);
   const [chats, setChats] = useState([]);
   const loading = useRef(false);
@@ -121,9 +121,9 @@ export default function ChatsDialogs() {
           chatsRef.current = chatsRef.current.map((chat) =>
             chat.id === updateInfo.update.user_id
               ? {
-                  ...chat,
-                  online: updateInfo.update?.status._ === "userStatusOnline",
-                }
+                ...chat,
+                online: updateInfo.update?.status._ === "userStatusOnline",
+              }
               : chat
           );
           setChats(chatsRef.current);
@@ -139,9 +139,9 @@ export default function ChatsDialogs() {
         chatsRef.current = chatsRef.current.map((chat) =>
           chat.id === updateInfo.update.user_id
             ? {
-                ...chat,
-                typing: true,
-              }
+              ...chat,
+              typing: true,
+            }
             : chat
         );
         setChats(chatsRef.current);
@@ -150,9 +150,9 @@ export default function ChatsDialogs() {
           chatsRef.current = chatsRef.current.map((chat) =>
             chat.id === updateInfo.update.user_id
               ? {
-                  ...chat,
-                  typing: false,
-                }
+                ...chat,
+                typing: false,
+              }
               : chat
           );
           setChats(chatsRef.current);
@@ -167,16 +167,16 @@ export default function ChatsDialogs() {
           chatsRef.current.map(async (chat) =>
             chat.id === updateInfo.update.user_id
               ? {
-                  ...chat,
-                  photo: await getChatPhoto("inputPeerChat", {
-                    photo: {
-                      _: "userProfilePhoto",
-                    },
-                    user_id: chat.id,
-                    access_hash: chat.access_hash,
-                    photo_id: updateInfo.update.photo.photo_id,
-                  }),
-                }
+                ...chat,
+                photo: await getChatPhoto("inputPeerChat", {
+                  photo: {
+                    _: "userProfilePhoto",
+                  },
+                  user_id: chat.id,
+                  access_hash: chat.access_hash,
+                  photo_id: updateInfo.update.photo.photo_id,
+                }),
+              }
               : chat
           )
         );
@@ -193,9 +193,9 @@ export default function ChatsDialogs() {
         chatsRef.current = chatsRef.current.map((chat) =>
           chat.id === updateInfo.updates[0]?.peer?.user_id
             ? {
-                ...chat,
-                unreadCount: updateInfo.updates[0].still_unread_count,
-              }
+              ...chat,
+              unreadCount: updateInfo.updates[0].still_unread_count,
+            }
             : chat
         );
         setChats(chatsRef.current);
@@ -208,9 +208,9 @@ export default function ChatsDialogs() {
         chatsRef.current = chatsRef.current.map((chat) =>
           chat.id === updateInfo.updates[0]?.peer?.user_id
             ? {
-                ...chat,
-                read: true,
-              }
+              ...chat,
+              read: true,
+            }
             : chat
         );
         setChats(chatsRef.current);
@@ -223,9 +223,9 @@ export default function ChatsDialogs() {
         chatsRef.current = chatsRef.current.map((chat) =>
           chat.id === updateInfo.updates[0]?.message?.peer_id?.user_id
             ? {
-                ...chat,
-                message: updateInfo.updates[0]?.message.message,
-              }
+              ...chat,
+              message: updateInfo.updates[0]?.message.message,
+            }
             : chat
         );
         setChats(chatsRef.current);
@@ -260,14 +260,14 @@ export default function ChatsDialogs() {
               (message) => chat.messageId === message
             )
               ? {
-                  ...chat,
-                  message: dialog.messages[0].message,
-                  unreadCount: dialog.dialogs[0].unread_count,
-                  out: dialog.out,
-                  read: dialog.read_outbox_max_id === dialog.top_message,
-                  date: convertDate(dialog.messages[0].date),
-                  dateSeconds: dialog.messages[0].date,
-                }
+                ...chat,
+                message: dialog.messages[0].message,
+                unreadCount: dialog.dialogs[0].unread_count,
+                out: dialog.out,
+                read: dialog.read_outbox_max_id === dialog.top_message,
+                date: convertDate(dialog.messages[0].date),
+                dateSeconds: dialog.messages[0].date,
+              }
               : chat
           );
           chatsRef.current.sort((a, b) => b.dateSeconds > a.dateSeconds);
@@ -390,10 +390,10 @@ export default function ChatsDialogs() {
                 styles.chatPhoto,
                 !item.photo || item.self
                   ? {
-                      backgroundColor: item.self
-                        ? colors.primary
-                        : item.avatarColor,
-                    }
+                    backgroundColor: item.self
+                      ? colors.primary
+                      : item.avatarColor,
+                  }
                   : null,
               ]}
               imageStyle={{ borderRadius: 64 }}
@@ -454,17 +454,17 @@ export default function ChatsDialogs() {
                   {!item.typing && item.out
                     ? "You: "
                     : item.messageFrom
-                    ? item.messageFrom + ": "
-                    : ""}
+                      ? item.messageFrom + ": "
+                      : ""}
                   {item.typing
                     ? "Typing..."
                     : item.messageService
-                    ? item.messageService
-                    : item.media && item.message
-                    ? item.media + ", " + item.message
-                    : item.media
-                    ? item.media
-                    : item.message}
+                      ? item.messageService
+                      : item.media && item.message
+                        ? item.media + ", " + item.message
+                        : item.media
+                          ? item.media
+                          : item.message}
                 </Text>
 
                 {item.unreadCount && !item.out ? (
